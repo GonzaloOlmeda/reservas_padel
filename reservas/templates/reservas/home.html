@@ -1,6 +1,34 @@
-{% extends "base.html" %}
-{% block title %}Inicio - Padel Reservas{% endblock %}
-{% block content %}
-  <h1>Bienvenido a Padel Reservas</h1>
-  <p>Demo: Aquí verás la lista de pistas y podrás reservar.</p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PadelReservas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="p-4">
+
+<h1>Bienvenido a Padel Reservas</h1>
+<p>Demo: Aquí verás la lista de pistas y podrás reservar.</p>
+
+<hr>
+
+<h2>Pistas disponibles</h2>
+<div class="row">
+    {% for pista in pistas %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ pista.nombre }}</h5>
+                <p class="card-text">{{ pista.descripcion }}</p>
+                <p class="card-text"><small class="text-muted">Ubicación: {{ pista.ubicacion }}</small></p>
+                <a href="#" class="btn btn-primary disabled">Reservar</a> <!-- botón por ahora deshabilitado -->
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No hay pistas disponibles.</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>
