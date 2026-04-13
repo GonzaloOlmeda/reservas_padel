@@ -1,0 +1,14 @@
+<h2>{{ pista.nombre }}</h2>
+<p>{{ pista.descripcion }}</p>
+
+<h3>Horarios para {{ fecha }}</h3>
+
+<ul>
+    {% for h in horarios %}
+        {% if h.id in horarios_ocupados %}
+            <li>{{ h }} - ❌ Ocupado</li>
+        {% else %}
+            <li>{{ h }} - <a href="{% url 'crear_reserva' pista.id h.id fecha %}">Reservar</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>

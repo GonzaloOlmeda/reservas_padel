@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Reservar {{ pista.nombre }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="fecha" class="form-label">Selecciona una fecha</label>
+        <input type="date" name="fecha" id="fecha" class="form-control" value="{{ fecha }}">
+    </div>
+    <div class="mb-3">
+        <label for="horario" class="form-label">Selecciona un horario</label>
+        <select name="horario" id="horario" class="form-select">
+            {% for horario in horarios %}
+            <option value="{{ horario.id }}">{{ horario.hora_inicio }} - {{ horario.hora_fin }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Reservar</button>
+</form>
+{% endblock %}
