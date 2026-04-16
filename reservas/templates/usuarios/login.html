@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h3 class="text-center fw-bold mb-4">🎾 Iniciar Sesión</h3>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+                    </div>
+                </form>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="{% url 'password_reset' %}" class="text-primary">¿Olvidaste tu contraseña?</a>
+                    <span>¿No tienes cuenta? <a href="{% url 'registro' %}" class="text-primary fw-semibold">Regístrate</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

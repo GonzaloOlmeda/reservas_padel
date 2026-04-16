@@ -1,14 +1,56 @@
-<h2>{{ pista.nombre }}</h2>
-<p>{{ pista.descripcion }}</p>
+{% extends 'base.html' %}
 
-<h3>Horarios para {{ fecha }}</h3>
+{% block title %}{{ pista.nombre }} - Padel Reservas{% endblock %}
 
-<ul>
-    {% for h in horarios %}
-        {% if h.id in horarios_ocupados %}
-            <li>{{ h }} - ❌ Ocupado</li>
-        {% else %}
-            <li>{{ h }} - <a href="{% url 'crear_reserva' pista.id h.id fecha %}">Reservar</a></li>
-        {% endif %}
-    {% endfor %}
-</ul>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">{{ pista.nombre }}</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">{{ pista.descripcion }}</p>
+                {% if pista.ubicacion %}
+                    <p class="text-muted mb-1"><strong>Ubicación:</strong> {{ pista.ubicacion }}</p>
+                {% endif %}
+                <p class="text-muted mb-0"><strong>Fecha:</strong> {{ fecha }}</p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Horarios disponibles</h4>
+            </div>
+            <div class="list-group list-group-flush">
+                {% for h in horarios %}
+                    {% if h.id in horarios_ocupados %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ h }}</strong>
+                                <span class="badge bg-danger ms-2">Ocupado</span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ h }}</strong>
+                            </div>
+                            <a href="{% url 'crear_reserva' pista.id h.id fecha %}" class="btn btn-sm btn-success">Reservar</a>
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <div class="list-group-item">
+                        <p class="mb-0">No hay horarios disponibles para esta fecha.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary">← Volver a pistas</a>
+            <a href="{% url 'comprar_bono' %}" class="btn btn-primary">Comprar Bono</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

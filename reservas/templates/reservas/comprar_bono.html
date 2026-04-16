@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Comprar Bono{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h3 class="text-center fw-bold mb-4">🎟️ Comprar Bono de Créditos</h3>
+                <p class="text-center text-muted mb-4">
+                    Cada reserva requiere 1 crédito. Compra un bono para poder reservar pistas.
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Selecciona un paquete:</label>
+                        {% for radio in form.paquete %}
+                        <div class="form-check">
+                            {{ radio.tag }}
+                            <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                {{ radio.choice_label }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                        {% if form.paquete.errors %}
+                            <div class="text-danger small">{{ form.paquete.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            💳 Comprar Bono
+                        </button>
+                    </div>
+                </form>
+
+                <hr>
+                <div class="text-center">
+                    <a href="{% url 'perfil' %}" class="btn btn-outline-secondary">Volver al perfil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mi Perfil{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Mi Perfil</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Datos de cuenta</h5>
+                <p><strong>Usuario:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Teléfono:</strong> {{ user.telefono|default:"No indicado" }}</p>
+                <p><strong>Rol:</strong>
+                    {% if user.es_admin %}
+                        <span class="badge bg-danger">Administrador</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Usuario</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Mis Bonos</h5>
+                {% if total_creditos %}
+                    <p class="h4 text-success fw-bold">{{ total_creditos }} créditos disponibles</p>
+                    <p class="text-muted">Puedes usar estos créditos para reservar pistas.</p>
+                {% else %}
+                    <p class="text-muted">No tienes créditos disponibles.</p>
+                {% endif %}
+                <a href="{% url 'comprar_bono' %}" class="btn btn-primary btn-sm">Comprar más bonos</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Mis últimas reservas</h5>
+                {% if reservas %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Pista</th>
+                                <th>Fecha</th>
+                                <th>Horario</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reserva in reservas %}
+                            <tr>
+                                <td>{{ reserva.pista.nombre }}</td>
+                                <td>{{ reserva.fecha }}</td>
+                                <td>{{ reserva.horario }}</td>
+                                <td>
+                                    {% if reserva.estado == 'confirmada' %}
+                                        <span class="badge bg-success">Confirmada</span>
+                                    {% elif reserva.estado == 'cancelada' %}
+                                        <span class="badge bg-danger">Cancelada</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">Pendiente</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-muted">Aún no tienes reservas.</p>
+                {% endif %}
+                <a href="{% url 'home' %}" class="btn btn-primary mt-2">Hacer una reserva</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
