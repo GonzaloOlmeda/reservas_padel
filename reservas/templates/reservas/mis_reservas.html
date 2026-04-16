@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Reservas{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3">Mis Reservas</h1>
+        <p class="text-muted mb-0">Consulta todas tus reservas pasadas, activas y canceladas.</p>
+    </div>
+</div>
+
+{% if reservas %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Pista</th>
+                    <th>Fecha</th>
+                    <th>Horario</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserva in reservas %}
+                <tr>
+                    <td>{{ reserva.pista.nombre }}</td>
+                    <td>{{ reserva.fecha }}</td>
+                    <td>{{ reserva.horario }}</td>
+                    <td>
+                        {% if reserva.estado == 'confirmada' %}
+                            <span class="badge bg-success">Confirmada</span>
+                        {% elif reserva.estado == 'cancelada' %}
+                            <span class="badge bg-danger">Cancelada</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Pendiente</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if reserva.puede_cancelar %}
+                            <a href="{% url 'cancelar_reserva' reserva.id %}" class="btn btn-sm btn-outline-danger">Cancelar</a>
+                        {% else %}
+                            <span class="text-muted">--</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        No tienes reservas registradas aún. Haz tu primera reserva desde la página principal.
+    </div>
+{% endif %}
+{% endblock %}
