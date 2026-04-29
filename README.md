@@ -159,7 +159,10 @@ python manage.py check
 Si el comando completa sin errores, ¡la instalación es correcta!
 
 ---
-
+##Si no desea crear Usuario, puede iniciar sesión con los predeterminados guardados en la base de datos
+  user,    passwd
+- anonimo, estaesmicontraseña
+- admin, holasoyadmin
 ## 👥 Creación de Usuarios
 
 ### Usuario Administrativo (Superusuario)
