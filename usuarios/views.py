@@ -3,8 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
-from .forms import RegistroForm, LoginForm
-
+from .forms import RegistroForm, LoginForm, UsuarioUpdateForm
 
 def registro(request):
     if request.user.is_authenticated:
@@ -93,3 +92,17 @@ def perfil(request):
         'reservas': reservas,
         'total_creditos': total_creditos,
     })
+
+@login_required
+def editar_perfil(request):
+    usuario = request.user
+
+    if request.method == 'POST':
+        form = UsuarioUpdateForm(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()
+            return redirect('perfil')  # nombre de tu vista de perfil
+    else:
+        form = UsuarioUpdateForm(instance=usuario)
+
+    return render(request, 'usuarios/editar_perfil.html', {'form': form})
