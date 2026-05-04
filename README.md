@@ -146,9 +146,6 @@ python manage.py migrate
 
 Este comando aplicará todas las migraciones pendientes:
 - `usuarios/migrations/0001_initial.py` - Tabla de usuarios personalizado
-- `usuarios/migrations/0002_initial.py` - Campos adicionales de usuario
-- `reservas/migrations/0001_initial.py` - Tablas de pistas, horarios y bonos
-- `reservas/migrations/0002_initial.py` - Tabla de reservas
 
 ### Paso 2: Verificar Instalación
 
@@ -159,7 +156,10 @@ python manage.py check
 Si el comando completa sin errores, ¡la instalación es correcta!
 
 ---
-
+##Si no desea crear Usuario, puede iniciar sesión con los predeterminados guardados en la base de datos
+  user,    passwd
+- anonimo1, estaesmicontraseña
+- admin, holasoyadmin
 ## 👥 Creación de Usuarios
 
 ### Usuario Administrativo (Superusuario)
@@ -246,8 +246,7 @@ reservas_padel/
 │   └── wsgi.py                        # Configuración WSGI
 ├── reservas/
 │   ├── migrations/
-│   │   ├── 0001_initial.py           # Migración inicial
-│   │   └── 0002_initial.py           # Migración modelos relacionales
+│   │   └── 0001_initial.py           # Migración inicial
 │   ├── templates/
 │   │   ├── base.html                 # Template base
 │   │   ├── reservas/
@@ -596,6 +595,6 @@ python manage.py migrate
 - **Email Notifications**: Sistema de notificaciones por email implementado
 - **Admin Panel**: Panel de administración totalmente funcional
 
-**Última actualización**: Abril 2026  
+**Última actualización**: Mayo 2026  
 **Versión de Django**: 5.2.8  
 **Versión de Python**: 3.10+
