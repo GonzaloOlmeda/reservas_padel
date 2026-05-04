@@ -1,4 +1,73 @@
-<h1>Reserva creada correctamente</h1>
-<p>Has reservado: <strong>{{ reserva.pista }}</strong></p>
-<p>Fecha: {{ reserva.fecha }}</p>
-<p>Horario: {{ reserva.horario }}</p>
+{% extends 'base.html' %}
+
+{% block title %}Confirmación de Reserva - Padel Reservas{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+            
+            <!-- Encabezado de Éxito -->
+            <div class="card-header bg-success text-white text-center py-4">
+                <div class="mb-2">
+                    <span style="font-size: 3.5rem;">✅</span>
+                </div>
+                <h2 class="fw-bold mb-0">¡Reserva Creada!</h2>
+            </div>
+
+            <div class="card-body p-4">
+                <p class="text-center text-muted mb-4">Tu reserva se ha procesado correctamente. Aquí tienes el comprobante:</p>
+                
+                <!-- Ticket de Detalles -->
+                <div class="bg-light rounded-3 p-4 mb-4">
+                    <div class="mb-3">
+                        <label class="text-muted small text-uppercase fw-bold d-block">Pista</label>
+                        <span class="fs-5 fw-bold text-primary">{{ reserva.pista }}</span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="text-muted small text-uppercase fw-bold d-block">Fecha</label>
+                            <!-- Muestra la fecha tal como sale en tu views.py -->
+                            <span class="fw-bold">{{ reserva.fecha }}</span>
+                        </div>
+                        <div class="col-6">
+                            <label class="text-muted small text-uppercase fw-bold d-block">Horario</label>
+                            <span class="fw-bold">{{ reserva.horario }}</span>
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted small text-uppercase fw-bold">Estado</span>
+                        <span class="badge bg-success">Confirmada</span>
+                    </div>
+                </div>
+
+                <!-- Info de créditos (Basado en tu función consumir_credito) -->
+                <div class="alert alert-info border-0 d-flex align-items-center mb-4">
+                    <div class="me-3 fs-4">💰</div>
+                    <div class="small">
+                        Se ha descontado <strong>1 crédito</strong> de tu bono activo.
+                    </div>
+                </div>
+
+                <!-- Botones de navegación -->
+                <div class="d-grid gap-2">
+                    <a href="{% url 'mis_reservas' %}" class="btn btn-primary btn-lg">
+                        Ver Mis Reservas
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                        Volver al Inicio
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white border-0 py-3 text-center">
+                <small class="text-muted italic">Hemos enviado un comprobante a tu email.</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
